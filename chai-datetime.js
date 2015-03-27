@@ -21,8 +21,12 @@
 }(function(chai, utils){
   chai.datetime = chai.datetime || {};
 
+  function sanitiseDate(date) {
+    return (date instanceof Date) ? date : new Date(date);
+  }
+
   chai.datetime.formatDate = function(date) {
-    return date.toDateString();
+    return sanitiseDate(date).toDateString();
   };
 
   chai.datetime.formatTime = function(time) {
@@ -34,7 +38,7 @@
   };
 
   chai.datetime.equalDate = function(actual, expected) {
-    return actual.toDateString() === expected.toDateString();
+    return actual.toDateString() === sanitiseDate(expected).toDateString();
   };
 
   var dateWithoutTime = function(date) {

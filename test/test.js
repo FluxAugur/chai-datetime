@@ -246,6 +246,25 @@
           });
         });
 
+        describe('when a lazy developer provides a string to match against', function () {
+          var theSameAsAString = '2013-05-30';
+          it('passes', function() {
+            this.subject.should.be.equalDate(theSameAsAString);
+          });
+
+          describe('when negated', function() {
+            it('fails', function() {
+              var test = this;
+
+              (function() {
+                test.subject.should.not.be.equalDate(theSameAsAString);
+              }).should.fail(
+                'expected Thu May 30 2013 to not equal Thu May 30 2013'
+              );
+            });
+          });
+
+        });
       });
     });
 
