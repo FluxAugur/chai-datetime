@@ -246,18 +246,29 @@
           });
         });
 
-        describe('when a lazy developer provides a string to match against', function () {
+        describe('when a lazy developer provides a non-date to match against', function () {
           var theSameAsAString = '2013-05-30';
-          it('passes', function() {
+          var theSameAsMillisecondsSinceEpoch = 1369872000000;
+
+          it('date as string passes', function() {
             this.subject.should.be.equalDate(theSameAsAString);
           });
 
+          it('date as epoch time passes', function() {
+            this.subject.should.be.equalDate(theSameAsMillisecondsSinceEpoch);
+          });
+
           describe('when negated', function() {
-            it('fails', function() {
+            it('date as stringfails', function() {
               var test = this;
 
               (function() {
                 test.subject.should.not.be.equalDate(theSameAsAString);
+              }).should.fail(
+                'expected Thu May 30 2013 to not equal Thu May 30 2013'
+              );
+              (function() {
+                test.subject.should.not.be.equalDate(theSameAsMillisecondsSinceEpoch);
               }).should.fail(
                 'expected Thu May 30 2013 to not equal Thu May 30 2013'
               );
